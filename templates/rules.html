@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <a href="{{ url_for('community') }}" class="breadcrumb-link">Сообщество</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Правила сообщества</span>
+        </div>
+        <h1 class="page-title">Правила сообщества</h1>
+    </div>
+
+    <p style="color: #aaa; font-size: 1rem; margin-bottom: 30px;">Правила участия в сообществе «Вселенная Ведьмака: От А до Я».</p>
+
+    <div class="rules-grid">
+        <div class="rule-card" style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f; border-radius: 8px; display: flex; gap: 15px;">
+            <div style="font-size: 2.5rem; color: var(--text-gold); font-weight: 300; opacity: 0.5;">01</div>
+            <div>
+                <h4 style="color: var(--text-gold); margin-bottom: 8px;">Уважение к участникам</h4>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5;">Относитесь к другим участникам сообщества с уважением. Оскорбления, угрозы и дискриминация недопустимы.</p>
+            </div>
+        </div>
+
+        <div class="rule-card" style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f; border-radius: 8px; display: flex; gap: 15px;">
+            <div style="font-size: 2.5rem; color: var(--text-gold); font-weight: 300; opacity: 0.5;">02</div>
+            <div>
+                <h4 style="color: var(--text-gold); margin-bottom: 8px;">Тематика контента</h4>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5;">Публикуйте материалы, относящиеся к вселенной Ведьмака. Офтопик ограничен специальными разделами.</p>
+            </div>
+        </div>
+
+        <div class="rule-card" style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f; border-radius: 8px; display: flex; gap: 15px;">
+            <div style="font-size: 2.5rem; color: var(--text-gold); font-weight: 300; opacity: 0.5;">03</div>
+            <div>
+                <h4 style="color: var(--text-gold); margin-bottom: 8px;">Спойлеры</h4>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5;">При обсуждении сюжетных моментов используйте предупреждение о спойлерах. Это важно для новых фанатов.</p>
+            </div>
+        </div>
+
+        <div class="rule-card" style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f; border-radius: 8px; display: flex; gap: 15px;">
+            <div style="font-size: 2.5rem; color: var(--text-gold); font-weight: 300; opacity: 0.5;">04</div>
+            <div>
+                <h4 style="color: var(--text-gold); margin-bottom: 8px;">Авторские права</h4>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5;">Не публикуйте нелицензионные переводы книг, взломанные игры или защищённые материалы.</p>
+            </div>
+        </div>
+
+        <div class="rule-card" style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f; border-radius: 8px; display: flex; gap: 15px;">
+            <div style="font-size: 2.5rem; color: var(--text-gold); font-weight: 300; opacity: 0.5;">05</div>
+            <div>
+                <h4 style="color: var(--text-gold); margin-bottom: 8px;">Качество материалов</h4>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5;">Статьи и описания должны быть фактически корректны. Ссылайтесь на источники при спорных утверждениях.</p>
+            </div>
+        </div>
+
+        <div class="rule-card" style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f; border-radius: 8px; display: flex; gap: 15px;">
+            <div style="font-size: 2.5rem; color: var(--text-gold); font-weight: 300; opacity: 0.5;">06</div>
+            <div>
+                <h4 style="color: var(--text-gold); margin-bottom: 8px;">Администрация</h4>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5;">Решения модераторов обязательны к исполнению. Апелляции принимаются через форму обратной связи.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

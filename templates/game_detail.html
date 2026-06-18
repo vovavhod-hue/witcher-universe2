@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="breadcrumbs" style="margin: 20px 0;">
+        <a href="{{ url_for('index') }}" style="color: gold"><span>Главная</span> &gt; </a> 
+        <a href="{{ url_for('games_page') }}" style="color: gold"><span>Игры</span> &gt; </a>
+        <span>{{ game[1] }}</span>
+    </div>
+
+    <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+        <div style="flex: 2; min-width: 300px;">
+            <h1 style="font-size: 2.5rem; color: #fff; margin-bottom: 10px;">{{ game[1] }}</h1>
+            
+            <!-- ОПИСАНИЕ ИГРЫ (как у книг) -->
+            <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid var(--text-gold);">
+                <div style="color: #ddd; font-size: 1.05rem; line-height: 1.8;">
+                    {{ game[5] }}
+                </div>
+            </div>
+
+            <!-- СОДЕРЖАНИЕ ИЗ ЗАГРУЖЕННОГО HTML-ФАЙЛА (как у книг) -->
+            <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                <h3 style="color: var(--text-gold); margin-bottom: 15px; border-bottom: 1px solid var(--border-gold); padding-bottom: 10px;">Содержание</h3>
+                <div style="color: #aaa; line-height: 2;">
+                    {{ game[8]|safe }}
+                </div>
+            </div>
+        </div>
+
+        <div style="flex: 1; min-width: 250px;">
+            <!-- ПРАВАЯ КОЛОНКА (Информация об игре) -->
+            <div style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f;">
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <div style="height: 300px; background-image: url('{{ game[4] }}'); background-size: cover; background-position: center;"></div>
+                </div>
+                <h4 style="color: var(--text-gold); text-align: center; margin-bottom: 15px;">"{{ game[1] }}"</h4>
+                <div style="border-top: 1px solid var(--border-gold); padding-top: 10px;">
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Год</span>
+                        <span style="color: #fff;">{{ game[2] }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Платформа</span>
+                        <span style="color: #fff;">{{ game[3] }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Издатель</span>
+                        <span style="color: #fff;">{{ game[6] or '—' }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Рейтинг</span>
+                        <span style="color: #fff;">{{ game[7] or '—' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

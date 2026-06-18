@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h1 style="color: #fff; font-size: 2rem;">Панель управления</h1>
+        <div>
+            <a href="{{ url_for('index') }}" class="btn-gold">На сайт</a>
+        </div>
+    </div>
+
+    <div class="stats-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;">
+        <div class="stat-card" style="border: 1px solid var(--border-gold); padding: 20px; text-align: center; background-color: #1f1f1f;">
+            <div style="font-size: 2.5rem; color: var(--text-gold);">{{ stats.books }}</div>
+            <div style="color: #aaa; text-transform: uppercase;">Книги</div>
+        </div>
+        <div class="stat-card" style="border: 1px solid var(--border-gold); padding: 20px; text-align: center; background-color: #1f1f1f;">
+            <div style="font-size: 2.5rem; color: var(--text-gold);">{{ stats.games }}</div>
+            <div style="color: #aaa; text-transform: uppercase;">Игры</div>
+        </div>
+        <div class="stat-card" style="border: 1px solid var(--border-gold); padding: 20px; text-align: center; background-color: #1f1f1f;">
+            <div style="font-size: 2.5rem; color: var(--text-gold);">{{ stats.ency }}</div>
+            <div style="color: #aaa; text-transform: uppercase;">Статьи</div>
+        </div>
+        <div class="stat-card" style="border: 1px solid var(--border-gold); padding: 20px; text-align: center; background-color: #1f1f1f;">
+            <div style="font-size: 2.5rem; color: var(--text-gold);">{{ stats.users }}</div>
+            <div style="color: #aaa; text-transform: uppercase;">Пользователи</div>
+        </div>
+    </div>
+
+    <div class="admin-tabs" style="border-bottom: 1px solid #444; margin-bottom: 20px;">
+        <ul style="display: flex; gap: 20px; list-style: none; padding: 0;">
+            <li style="padding: 10px 0; cursor: pointer; color: var(--text-gold); border-bottom: 3px solid var(--text-gold);" data-tab="tabBooks">Книги</li>
+            <li style="padding: 10px 0; cursor: pointer; color: #888;" data-tab="tabGames">Игры</li>
+            <li style="padding: 10px 0; cursor: pointer; color: #888;" data-tab="tabEncy">Энциклопедия</li>
+            <li style="padding: 10px 0; cursor: pointer; color: #888;" data-tab="tabJournal">Журнал</li>
+            <li style="padding: 10px 0; cursor: pointer; color: #888;" data-tab="tabModeration">Модерация</li>
+        </ul>
+    </div>
+
+    <div id="tabBooks" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 style="color: #fff;">Управление книгами</h2>
+            <button onclick="document.getElementById('addBookForm').style.display='block'" class="btn-gold">+ Добавить книгу</button>
+        </div>
+        
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-gold);">
+            <thead>
+                <tr style="background-color: #3b3516;">
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Название</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Тип</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Год</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #555;">
+                        <a href="{{ url_for('book_detail', id=book[0]) }}" style="color: #fff; text-decoration: none;">{{ book[1] }}</a>
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ book[2] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ book[3] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">
+                        <a href="{{ url_for('delete_item', type='book', id=book[0]) }}" style="color: #a00;">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="addBookForm" style="display: none; border: 1px solid var(--border-gold); padding: 20px; margin-top: 20px; background-color: #1f1f1f;">
+            <h3 style="color: #fff; margin-bottom: 15px;">Добавить новую книгу</h3>
+            <form action="{{ url_for('add_item') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="type" value="book">
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Название *</label>
+                    <input type="text" name="title" required style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Описание (отображается после названия)</label>
+                    <textarea name="desc" rows="4" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;" placeholder="Краткое описание книги..."></textarea>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Тип</label>
+                    <select name="subtype" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                        <option>Сборник рассказов</option>
+                        <option>Роман</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Оригинальное название</label>
+                    <input type="text" name="original_title" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Автор</label>
+                    <input type="text" name="author" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Перевод</label>
+                    <input type="text" name="translator" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Издательство</label>
+                    <input type="text" name="publisher" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Жанр</label>
+                    <input type="text" name="genre" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Год</label>
+                    <input type="text" name="year" placeholder="1993" pattern="[0-9]{4}" title="Введите год в формате 1993" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Обложка (загрузите файл)</label>
+                    <input type="file" name="image" accept="image/*" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Файл с содержанием (загрузите .html)</label>
+                    <input type="file" name="html_file" accept=".html" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <button type="submit" class="btn-gold">Сохранить</button>
+                <button type="button" onclick="document.getElementById('addBookForm').style.display='none'" style="background: #555; color: #fff; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; margin-left: 10px;">Отмена</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tabGames" class="tab-content" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 style="color: #fff;">Управление играми</h2>
+            <button onclick="document.getElementById('addGameForm').style.display='block'" class="btn-gold">+ Добавить игру</button>
+        </div>
+        
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-gold);">
+            <thead>
+                <tr style="background-color: #3b3516;">
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Название</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Год</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Платформа</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Издатель</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Рейтинг</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games %}
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #555;">
+                        <a href="{{ url_for('game_detail', id=game[0]) }}" style="color: #fff; text-decoration: none;">{{ game[1] }}</a>
+                    </td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ game[2] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ game[3] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ game[6] or '—' }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ game[7] or '—' }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">
+                        <a href="{{ url_for('delete_item', type='game', id=game[0]) }}" style="color: #a00;">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="addGameForm" style="display: none; border: 1px solid var(--border-gold); padding: 20px; margin-top: 20px; background-color: #1f1f1f;">
+            <h3 style="color: #fff; margin-bottom: 15px;">Добавить новую игру</h3>
+            <form action="{{ url_for('add_item') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="type" value="game">
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Название *</label>
+                    <input type="text" name="title" required style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Год</label>
+                    <input type="text" name="year" placeholder="2007" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Издатель</label>
+                    <input type="text" name="publisher" placeholder="Atari / CD Projekt" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Рейтинг</label>
+                    <input type="text" name="rating" placeholder="8.5 / 10" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Платформа</label>
+                    <input type="text" name="platform" placeholder="PC, PS, Xbox" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Описание</label>
+                    <textarea name="desc" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px; height: 80px;"></textarea>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Обложка (загрузите файл)</label>
+                    <input type="file" name="image" accept="image/*" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Файл с содержанием (загрузите .html)</label>
+                    <input type="file" name="html_file" accept=".html" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                
+                <button type="submit" class="btn-gold">Сохранить</button>
+                <button type="button" onclick="document.getElementById('addGameForm').style.display='none'" style="background: #555; color: #fff; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; margin-left: 10px;">Отмена</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tabEncy" class="tab-content" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 style="color: #fff;">Управление энциклопедией</h2>
+            <button onclick="document.getElementById('addEncyForm').style.display='block'" class="btn-gold">+ Добавить статью</button>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px;">
+            {% for entry in ency %}
+            <div style="border: 1px solid var(--border-gold); border-radius: 8px; overflow: hidden; background-color: #1f1f1f;">
+                <div style="height: 120px; background-image: url('{{ entry[3] }}'); background-size: cover; background-position: center;"></div>
+
+                <div style="padding: 15px;">
+                    <h4 style="color: var(--text-gold); font-size: 1rem; margin-bottom: 5px;">{{ entry[1] }}</h4>
+                    <div style="color: #aaa; font-size: 0.8rem; margin-bottom: 8px;">{{ entry[2] }}</div>
+                    <div style="color: #888; font-size: 0.8rem; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ entry[4][:50] }}...</div>
+
+                    <div style="display: flex; justify-content: flex-end; border-top: 1px solid #444; padding-top: 10px;">
+                        <a href="{{ url_for('delete_item', type='ency', id=entry[0]) }}" style="color: #a00; font-size: 0.9rem; text-decoration: none;">🗑️ Удалить</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="addEncyForm" style="display: none; border: 1px solid var(--border-gold); padding: 20px; margin-top: 20px; background-color: #1f1f1f;">
+            <h3 style="color: #fff; margin-bottom: 15px;">Добавить новую статью</h3>
+            <form action="{{ url_for('add_item') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="type" value="ency">
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Название *</label>
+                    <input type="text" name="title" required style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Тип</label>
+                    <select name="subtype" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                        <option>Персонажи</option>
+                        <option>Монстры</option>
+                        <option>Локации</option>
+                        <option>История</option>
+                        <option>Магия</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Теги (через запятую)</label>
+                    <input type="text" name="tags" placeholder="например: ведьмак, геральт, ривия" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Изображение (загрузите файл)</label>
+                    <input type="file" name="image" accept="image/*" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="color: #aaa; display: block; margin-bottom: 5px;">Описание</label>
+                    <textarea name="desc" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #fff; border-radius: 4px; height: 80px;"></textarea>
+                </div>
+                <button type="submit" class="btn-gold">Сохранить</button>
+                <button type="button" onclick="document.getElementById('addEncyForm').style.display='none'" style="background: #555; color: #fff; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; margin-left: 10px;">Отмена</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tabJournal" class="tab-content" style="display: none;">
+        <h2 style="color: #fff; margin-bottom: 15px;">Журнал активности</h2>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-gold);">
+            <thead>
+                <tr style="background-color: #3b3516;">
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Дата/Время</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Пользователь</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in journal %}
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ entry[1] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ entry[2] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ entry[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tabModeration" class="tab-content" style="display: none;">
+        <h2 style="color: #fff; margin-bottom: 15px;">Модерация (ожидает проверки)</h2>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-gold);">
+            <thead>
+                <tr style="background-color: #3b3516;">
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Автор</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Тема</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Сообщение</th>
+                    <th style="padding: 10px; border: 1px solid var(--border-gold); text-align: left;">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in mod %}
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ item[1] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ item[2] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">{{ item[3] }}</td>
+                    <td style="padding: 10px; border: 1px solid #555;">
+                        <a href="{{ url_for('approve_mod', id=item[0]) }}" style="color: #0a0;">✅ Одобрить</a>
+                        <a href="{{ url_for('delete_mod', id=item[0]) }}" style="color: #a00;">🗑️ Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const activeTab = localStorage.getItem('adminActiveTab') || 'tabBooks';
+    const defaultTab = document.querySelector(`[data-tab="${activeTab}"]`);
+    if (defaultTab) defaultTab.click();
+
+    document.querySelectorAll('.admin-tabs ul li').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.admin-tabs ul li').forEach(t => {
+                t.style.color = '#888';
+                t.style.borderBottom = 'none';
+            });
+            this.style.color = 'var(--text-gold)';
+            this.style.borderBottom = '3px solid var(--text-gold)';
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            const targetId = this.getAttribute('data-tab');
+            document.getElementById(targetId).style.display = 'block';
+
+            localStorage.setItem('adminActiveTab', targetId);
+        });
+    });
+});
+</script>
+{% endblock %}

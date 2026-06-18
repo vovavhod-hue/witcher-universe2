@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <a href="{{ url_for('community') }}" class="breadcrumb-link">Сообщество</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Справка</span>
+        </div>
+        <h1 class="page-title">Справка</h1>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: var(--text-gold); margin-bottom: 15px;">Как пользоваться сайтом?</h3>
+        <p style="color: #aaa; line-height: 1.6; margin-bottom: 20px;">На нашем сайте вы найдёте информацию о вселенной Ведьмака: книгах, играх, персонажах, монстрах, локациях и истории Континента.</p>
+        
+        <h4 style="color: var(--text-gold); margin-bottom: 10px;">Основные разделы:</h4>
+        <ul style="color: #aaa; line-height: 1.8; margin-left: 20px;">
+            <li><strong style="color: var(--text-gold);">Книги</strong> — полный список произведений Анджея Сапковского.</li>
+            <li><strong style="color: var(--text-gold);">Игры</strong> — информация о всех играх серии Ведьмак.</li>
+            <li><strong style="color: var(--text-gold);">Энциклопедия</strong> — статьи о персонажах, монстрах, локациях и магии.</li>
+            <li><strong style="color: var(--text-gold);">Сообщество</strong> — форум, новости, правила и обратная связь.</li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: var(--text-gold); margin-bottom: 15px;">Как искать информацию?</h3>
+        <p style="color: #aaa; line-height: 1.6;">Используйте строку поиска в верхней части страницы. Вы можете искать по названиям книг, игр, персонажей или ключевым словам.</p>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: var(--text-gold); margin-bottom: 15px;">Как оставить комментарий?</h3>
+        <p style="color: #aaa; line-height: 1.6;">Чтобы оставить комментарий или предложить новую статью, вам необходимо зарегистрироваться и войти в систему. После этого вы сможете участвовать в обсуждениях на форуме.</p>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h3 style="color: var(--text-gold); margin-bottom: 15px;">Как предложить новую статью?</h3>
+        <p style="color: #aaa; line-height: 1.6;">Если вы хотите предложить новую статью для энциклопедии, воспользуйтесь формой обратной связи или создайте тему в разделе «Общение».</p>
+    </div>
+</div>
+{% endblock %}

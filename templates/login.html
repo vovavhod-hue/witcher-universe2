@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="auth-card">
+        <h1>Вход</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="auth-field">
+                <label>Имя участника</label>
+                <input type="text" name="username" placeholder="Имя участника..." required>
+            </div>
+            <div class="auth-field">
+                <label>Пароль</label>
+                <input type="password" name="password" placeholder="Пароль..." required>
+            </div>
+            <a href="#" class="auth-forgot">Забыли пароль?</a>
+            <button type="submit" class="auth-btn">Войти</button>
+        </form>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="color: #a00; margin-top: 10px;">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="disclaimer">
+            Продолжая, вы соглашаетесь с действующими в Фэндом Условиями использования и Политикой конфиденциальности.
+        </div>
+        <div class="auth-link">
+            <span>Нет учетной записи?</span> <a href="{{ url_for('register') }}">Зарегистрироваться сейчас</a>
+        </div>
+        <a href="{{ url_for('index') }}" class="auth-back">← На главную</a>
+    </div>
+</div>
+{% endblock %}

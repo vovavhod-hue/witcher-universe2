@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Сообщество</span>
+        </div>
+        <h1 class="page-title">Сообщество</h1>
+    </div>
+
+    <div class="community-grid">
+        <div class="community-card" style="background-color: #1f1f1f; padding: 30px; border-radius: 8px; min-height: 250px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 15px;">Свежие новости</h3>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Последние новости из мира Ведьмака.</p>
+            </div>
+            <a href="{{ url_for('news') }}" style="color: var(--text-gold); text-decoration: none; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px;">
+                Перейти к обновлениям →
+            </a>
+        </div>
+
+        <div class="community-card" style="background-color: #1f1f1f; padding: 30px; border-radius: 8px; min-height: 250px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 15px;">Справка</h3>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Как пользоваться сайтом? Как искать информацию? Как оставить комментарий или предложить новую статью? Ответы здесь.</p>
+            </div>
+            <a href="{{ url_for('help')}}" style="color: var(--text-gold); text-decoration: none; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px;">
+                Открыть справку →
+            </a>
+        </div>
+
+        <div class="community-card" style="background-color: #1f1f1f; padding: 30px; border-radius: 8px; min-height: 250px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 15px;">Правила поведения</h3>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Уважайте других участников. Запрещен спам, оскорбления и размещение контента, нарушающего авторские права.</p>
+            </div>
+            <a href="{{ url_for('rules')}}" style="color: var(--text-gold); text-decoration: none; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px;">
+                Читать правила →
+            </a>
+        </div>
+
+        <div class="community-card" style="background-color: #1f1f1f; padding: 30px; border-radius: 8px; min-height: 250px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 15px;">Администрация</h3>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Команда проекта. Если у вас есть вопросы, предложения или вы нашли ошибку — свяжитесь с нами.</p>
+            </div>
+            <a href="{{ url_for('feedback')}}" style="color: var(--text-gold); text-decoration: none; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px;">
+                Связаться →
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

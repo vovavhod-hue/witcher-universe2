@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <a href="{{ url_for('books_page') }}" class="breadcrumb-link">Книги</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">{{ book[1] }}</span>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+        <div style="flex: 2; min-width: 300px;">
+            <h1 style="font-size: 2.5rem; color: #fff; margin-bottom: 10px;">{{ book[1] }}</h1>
+            
+            <!-- ОПИСАНИЕ КНИГИ (ПОСЛЕ НАЗВАНИЯ) -->
+            <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid var(--text-gold);">
+                <div style="color: #ddd; font-size: 1.05rem; line-height: 1.8;">
+                    {{ book[5] }}
+                </div>
+            </div>
+
+            <!-- СОДЕРЖАНИЕ ДЛЯ КНИГ -->
+            <div style="background-color: #1f1f1f; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                <h3 style="color: var(--text-gold); margin-bottom: 15px; border-bottom: 1px solid var(--border-gold); padding-bottom: 10px;">Содержание</h3>
+                
+                <!-- ЕДИНОЕ СОДЕРЖАНИЕ ДЛЯ ВСЕХ КНИГ -->
+                <div style="color: #aaa; line-height: 2; margin-bottom: 20px;">
+                    <ol style="margin-left: 20px; padding-left: 0;">
+                        <li>Рассказы, вошедшие в книгу</li>
+                        <li>История написания</li>
+                        <li>Отзывы и критики</li>
+                        <li>Связанные материалы</li>
+                    </ol>
+                </div>
+
+                <!-- Если нужен старый загруженный HTML-файл, оставьте его здесь -->
+                <div style="color: #aaa; line-height: 2;"> {{ book[6]|safe }} </div>
+            </div>
+        </div>
+
+        <div style="flex: 1; min-width: 250px;">
+            <div style="border: 1px solid var(--border-gold); padding: 20px; background-color: #1f1f1f;">
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <div style="height: 300px; background-image: url('{{ book[4] }}'); background-size: cover; background-position: center;"></div>
+                </div>
+                <h4 style="color: var(--text-gold); text-align: center; margin-bottom: 15px;">"{{ book[1] }}"</h4>
+                <div style="border-top: 1px solid var(--border-gold); padding-top: 10px;">
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Оригинал</span>
+                        <span style="color: #fff;">{{ book[8] or '—' }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Автор</span>
+                        <span style="color: #fff;">{{ book[7] or '—' }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Перевод</span>
+                        <span style="color: #fff;">{{ book[9] or '—' }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Издатель</span>
+                        <span style="color: #fff;">{{ book[10] or '—' }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Публикация</span>
+                        <span style="color: #fff;">{{ book[3] }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #444;">
+                        <span style="color: #aaa;">Жанр</span>
+                        <span style="color: #fff;">{{ book[11] or '—' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

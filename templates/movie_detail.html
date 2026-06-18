@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <a href="{{ url_for('movies') }}" class="breadcrumb-link">Фильмы</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">{{ movie.title }}</span>
+        </div>
+    </div>
+
+    <div class="movie-detail" style="background-color: #1f1f1f; padding: 30px; border-radius: 8px; margin-bottom: 30px;">
+        <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+            <!-- Постер -->
+            <div class="movie-poster" style="flex: 0 0 250px;">
+                <img src="{{ url_for('static', filename='images/300x450.jpg') }}" alt="{{ movie.title }}" style="width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border-gold);">
+            </div>
+
+            <!-- Информация -->
+            <div class="movie-info" style="flex: 1;">
+                <h1 style="color: #fff; font-size: 2rem; margin-bottom: 15px;">{{ movie.title }}</h1>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Год: {{ movie.year }}</span>
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Страна: {{ movie.country }}</span>
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Рейтинг: {{ movie.rating }}</span>
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Длительность: {{ movie.duration }}</span>
+                </div>
+
+                <div class="movie-description" style="color: #aaa; font-size: 1rem; line-height: 1.8; margin-bottom: 20px;">
+                    {{ movie.description }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Актеры -->
+        <div class="movie-actors" style="margin-top: 20px;">
+            <h3 style="color: var(--text-gold); margin-bottom: 15px;">Актеры</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                {% for actor in movie.actors %}
+                <span style="background: #333; padding: 8px 18px; border-radius: 20px; color: #aaa; font-size: 0.9rem;">{{ actor }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Трейлер -->
+    <div class="movie-trailer" style="margin-bottom: 40px;">
+        <h3 style="color: var(--text-gold); margin-bottom: 15px;">Трейлер</h3>
+        <div style="background-color: #1f1f1f; border-radius: 8px; overflow: hidden;">
+            {% if movie.trailer %}
+                <video width="100%" controls style="display: block; border-radius: 8px;">
+                    <source src="{{ url_for('static', filename='images/witcher_video.mp4') }}" type="video/mp4">
+                    Ваш браузер не поддерживает воспроизведение видео.
+                </video>
+            {% else %}
+                <div style="color: #aaa; text-align: center; padding: 60px 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🎬</div>
+                    <p>Трейлер недоступен</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

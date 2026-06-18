@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Фильмы</span>
+        </div>
+        <h1 class="page-title">Фильмы</h1>
+    </div>
+
+    <div class="movies-grid">
+        <div class="movie-card" style="background-color: #1f1f1f; border-radius: 4px; overflow: hidden;">
+            <div class="movie-poster" style="height: 300px; background-color: #333; background-image: url('/static/images/300x450.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="movie-info" style="padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--text-gold); font-size: 1rem; margin: 0;">
+                        <a href="{{ url_for('movie_detail_witcher1', id=1) }}" style="text-decoration: none; color: inherit;">Ведьмак (2001)</a>
+                    </h3>
+                    <span style="color: var(--text-gold); font-size: 1.1rem; font-weight: 700;">6.6</span>
+                </div>
+                <div style="color: #aaa; font-size: 0.85rem; margin-top: 4px;">Польша</div>
+            </div>
+        </div>
+
+        <div class="movie-card" style="background-color: #1f1f1f; border-radius: 4px; overflow: hidden;">
+            <div class="movie-poster" style="height: 300px; background-color: #333; background-image: url('/static/images/witcher2.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="movie-info" style="padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--text-gold); font-size: 1rem; margin: 0;">
+                        <a href="{{ url_for('movie_detail_witcher1', id=2) }}" style="text-decoration: none; color: inherit;">Ведьмак (2002)</a>
+                    </h3>
+                    <span style="color: var(--text-gold); font-size: 1.1rem; font-weight: 700;">7.4</span>
+                </div>
+                <div style="color: #aaa; font-size: 0.85rem; margin-top: 4px;">Польша</div>
+            </div>
+        </div>
+
+        <div class="movie-card" style="background-color: #1f1f1f; border-radius: 4px; overflow: hidden;">
+            <div class="movie-poster" style="height: 300px; background-color: #333; background-image: url('/static/images/Road_without_return._ESSE._Film-musical_poster.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="movie-info" style="padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--text-gold); font-size: 1rem; margin: 0;">
+                        <a href="{{ url_for('movie_detail_witcher1', id=3) }}" style="text-decoration: none; color: inherit;">Дорога без возврата</a>
+                    </h3>
+                    <span style="color: var(--text-gold); font-size: 1.1rem; font-weight: 700;">7.1</span>
+                </div>
+                <div style="color: #aaa; font-size: 0.85rem; margin-top: 4px;">Россия</div>
+            </div>
+        </div>
+
+        <div class="movie-card" style="background-color: #1f1f1f; border-radius: 4px; overflow: hidden;">
+            <div class="movie-poster" style="height: 300px; background-color: #333; background-image: url('/static/images/witcher3.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="movie-info" style="padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--text-gold); font-size: 1rem; margin: 0;">
+                        <a href="{{ url_for('movie_detail_witcher1', id=4) }}" style="text-decoration: none; color: inherit;">Ведьмак (2019)</a>
+                    </h3>
+                    <span style="color: var(--text-gold); font-size: 1.1rem; font-weight: 700;">7.1</span>
+                </div>
+                <div style="color: #aaa; font-size: 0.85rem; margin-top: 4px;">США, Польша</div>
+            </div>
+        </div>
+
+        <div class="movie-card" style="background-color: #1f1f1f; border-radius: 4px; overflow: hidden;">
+            <div class="movie-poster" style="height: 300px; background-color: #333; background-image: url('/static/images/witcher4.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="movie-info" style="padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--text-gold); font-size: 1rem; margin: 0;">
+                        <a href="{{ url_for('movie_detail_witcher1', id=5) }}" style="text-decoration: none; color: inherit;">Полвека поэзии спустя</a>
+                    </h3>
+                    <span style="color: var(--text-gold); font-size: 1.1rem; font-weight: 700;">6.5</span>
+                </div>
+                <div style="color: #aaa; font-size: 0.85rem; margin-top: 4px;">Польша</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

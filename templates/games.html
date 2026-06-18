@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Игры</span>
+        </div>
+        <h1 class="page-title">Игры</h1>
+    </div>
+
+    <!-- Сетка игр -->
+   <!-- games.html -->
+    <div class="games-grid">
+        {% for game in games %}
+        <a href="{{ url_for('game_detail', id=game[0]) }}" style="text-decoration: none; color: inherit; display: block;">
+            <div class="game-card" id="game-{{ loop.index }}" style="background-color: #1f1f1f; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-gold);">
+                <div class="game-cover" style="height: 300px; background-image: url('{{ game[4] }}'); background-size: cover; background-position: center;"></div>
+                <div class="game-info" style="padding: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <h3 style="color: #fff; font-size: 1.1rem; margin: 0;">{{ game[1] }}</h3>
+                        <span style="color: var(--text-gold); font-size: 1.1rem; font-weight: 700;">8.5/10</span>
+                    </div>
+                    <p style="color: #aaa; font-size: 0.85rem; margin: 5px 0;">{{ game[2] }}</p>
+                    <p style="color: #888; font-size: 0.8rem; margin: 5px 0;">{{ game[3] }}</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
+                        {% set platforms = game[3].split(',') %}
+                        {% for platform in platforms %}
+                        <span style="border: 1px solid var(--border-gold); padding: 2px 10px; border-radius: 4px; color: var(--text-gold); font-size: 0.8rem;">{{ platform.strip() }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

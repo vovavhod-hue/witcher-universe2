@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Поиск</span>
+        </div>
+        <h1 class="page-title">Поиск по сайту</h1>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin: 30px 0;">
+        <div style="flex: 1; display: flex; align-items: center; border: 1px solid var(--border-gold); border-radius: 4px; background: #1f1f1f; padding: 0 10px;">
+            <span style="color: #888; font-size: 1.2rem;">🔍</span>
+            <input type="text" id="searchQuery" value="{{ query }}" placeholder="Поиск..." style="flex: 1; padding: 12px; background: transparent; border: none; color: #fff; outline: none;">
+        </div>
+        <button onclick="window.location.href='/search?q=' + encodeURIComponent(document.getElementById('searchQuery').value)" style="border: 1px solid var(--border-gold); background: #1f1f1f; color: var(--text-gold); padding: 0 30px; border-radius: 4px; cursor: pointer; font-weight: 700;">НАЙТИ</button>
+    </div>
+
+    <p style="color: #aaa; font-size: 1rem; margin-bottom: 20px;">Введите запрос для поиска по всем разделам сайта: книги, игры, персонажи, монстры, локации, истории, магия.</p>
+
+    <h3 style="color: #888; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px;">ПРИМЕРЫ ЗАПРОСОВ</h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px;">
+            <a href="/search?q=Геральт" style="border: 1px solid var(--border-gold); padding: 5px 15px; border-radius: 4px; color: var(--text-gold); text-decoration: none;">Геральт</a>
+            <a href="/search?q=Цири" style="border: 1px solid var(--border-gold); padding: 5px 15px; border-radius: 4px; color: var(--text-gold); text-decoration: none;">Цири</a>
+            <a href="/search?q=Ведьмак 3" style="border: 1px solid var(--border-gold); padding: 5px 15px; border-radius: 4px; color: var(--text-gold); text-decoration: none;">Ведьмак 3</a>
+            <a href="/search?q=Последнее желание" style="border: 1px solid var(--border-gold); padding: 5px 15px; border-radius: 4px; color: var(--text-gold); text-decoration: none;">Последнее желание</a>
+        </div>
+        
+    <div style="color: #888; margin-bottom: 20px;">Найдено: {{ results|length if results else 0 }}</div>
+    
+    {% if results %}
+    <div id="searchResults">
+        <h2 style="color: #fff; margin-bottom: 20px;">Результаты поиска</h2>
+        <div id="resultsContainer">
+            {% for item in results %}
+            <div style="border-bottom: 1px solid #444; padding: 15px 0;">
+                <div style="color: #888; font-size: 0.8rem;">
+                    {% if item.type == 'book' %}📖 Книга{% elif item.type == 'game' %}🎮 Игра{% elif item.type == 'ency' %}📚 Статья{% endif %}
+                </div>
+                <h4 style="color: var(--text-gold); margin-bottom: 5px;">{{ item.title }}</h4>
+                <p style="color: #aaa; font-size: 0.9rem;">{{ item.description }}</p>
+                <a href="{{ item.url }}" style="color: var(--text-gold); text-decoration: none;">Подробнее →</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+<script>
+document.getElementById('searchQuery').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        window.location.href = '/search?q=' + encodeURIComponent(this.value);
+    }
+});
+</script>
+{% endblock %}

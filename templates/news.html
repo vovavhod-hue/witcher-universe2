@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <a href="{{ url_for('community') }}" class="breadcrumb-link">Сообщество</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Свежие новости</span>
+        </div>
+        <h1 class="page-title">Свежие новости</h1>
+    </div>
+
+    <!-- ФИЛЬТРЫ (РАБОТАЮТ ПО КЛИКУ) -->
+    <div class="news-filters" style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+        <a href="#" onclick="filterNews('all')" class="filter-btn active" style="border: 1px solid var(--border-gold); padding: 6px 20px; color: var(--text-gold); text-decoration: none; border-radius: 4px;">ВСЕ</a>
+        <a href="#" onclick="filterNews('ИГРЫ')" class="filter-btn" style="border: 1px solid #555; padding: 6px 20px; color: #aaa; text-decoration: none; border-radius: 4px;">ИГРЫ</a>
+        <a href="#" onclick="filterNews('КНИГИ')" class="filter-btn" style="border: 1px solid #555; padding: 6px 20px; color: #aaa; text-decoration: none; border-radius: 4px;">КНИГИ</a>
+        <a href="#" onclick="filterNews('ФИЛЬМЫ')" class="filter-btn" style="border: 1px solid #555; padding: 6px 20px; color: #aaa; text-decoration: none; border-radius: 4px;">ФИЛЬМЫ</a>
+    </div>
+
+    <!-- СПИСОК НОВОСТЕЙ -->
+    <div class="news-list">
+        <!-- Новость 1 -->
+        <div class="news-item" data-category="ИГРЫ" style="background-color: #1f1f1f; padding: 20px; margin-bottom: 15px; border-radius: 4px;">
+            <div style="color: var(--text-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">ИГРЫ</div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">CD Projekt представила дополнение для Ведьмак 3</h3>
+            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px;">Студия CD Projekt RED анонсировала новое бесплатное дополнение для «Ведьмак 3: Дикая Охота», посвящённое дню рождения игры.</p>
+            <div style="color: #888; font-size: 0.85rem;">16 декабря 2025 г.</div>
+        </div>
+
+        <!-- Новость 2 -->
+        <div class="news-item" data-category="КНИГИ" style="background-color: #1f1f1f; padding: 20px; margin-bottom: 15px; border-radius: 4px;">
+            <div style="color: var(--text-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">КНИГИ</div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Ожидаемый выход комикса «Ведьмак»</h3>
+            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px;">Издательство анонсировало выход нового комикса по мотивам вселенной Ведьмака.</p>
+            <div style="color: #888; font-size: 0.85rem;">16 декабря 2025 г.</div>
+        </div>
+
+        <!-- Новость 3 -->
+        <div class="news-item" data-category="ФИЛЬМЫ" style="background-color: #1f1f1f; padding: 20px; margin-bottom: 15px; border-radius: 4px;">
+            <div style="color: var(--text-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">ФИЛЬМЫ</div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Премьера 4-го сезона сериала «Ведьмак» от Netflix</h3>
+            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px;">Netflix подтвердил дату выхода 4-го сезона сериала «Ведьмак» с новым исполнителем главной роли.</p>
+            <div style="color: #888; font-size: 0.85rem;">30 октября 2025 г.</div>
+        </div>
+
+        <!-- Новость 4 -->
+        <div class="news-item" data-category="КНИГИ" style="background-color: #1f1f1f; padding: 20px; margin-bottom: 15px; border-radius: 4px;">
+            <div style="color: var(--text-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">КНИГИ</div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Выход книги «Перекрёсток воронов» в России</h3>
+            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px;">Новая книга Анджея Сапковского вышла в России и во всём мире.</p>
+            <div style="color: #888; font-size: 0.85rem;">30 сентября 2025 г.</div>
+        </div>
+
+        <!-- Новость 5 -->
+        <div class="news-item" data-category="КНИГИ" style="background-color: #1f1f1f; padding: 20px; margin-bottom: 15px; border-radius: 4px;">
+            <div style="color: var(--text-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">КНИГИ</div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Выход комикса «Вопрос цены»</h3>
+            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px;">Новый комикс по вселенной Ведьмака поступил в продажу.</p>
+            <div style="color: #888; font-size: 0.85rem;">29 июля 2025 г.</div>
+        </div>
+
+        <!-- Новость 6 -->
+        <div class="news-item" data-category="ИГРЫ" style="background-color: #1f1f1f; padding: 20px; margin-bottom: 15px; border-radius: 4px;">
+            <div style="color: var(--text-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 5px;">ИГРЫ</div>
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Техническая демонстрация «Ведьмак 4»</h3>
+            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px;">CD Projekt RED показала новый трейлер и техническую демонстрацию игры «Ведьмак 4».</p>
+            <div style="color: #888; font-size: 0.85rem;">3 июня 2025 г.</div>
+        </div>
+    </div>
+</div>
+
+<!-- JAVASCRIPT ДЛЯ РАБОТЫ ФИЛЬТРА -->
+<script>
+    // Функция фильтрации новостей
+    function filterNews(category) {
+        // Перекрашиваем кнопки
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.style.borderColor = '#555';
+            btn.style.color = '#aaa';
+        });
+        // Подсвечиваем нажатую кнопку
+        const activeBtn = document.querySelector(`.filter-btn[onclick="filterNews('${category}')"]`);
+        if (activeBtn) {
+            activeBtn.style.borderColor = 'var(--border-gold)';
+            activeBtn.style.color = 'var(--text-gold)';
+        }
+
+        // Фильтруем новости
+        const items = document.querySelectorAll('.news-item');
+        items.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+            if (category === 'all' || itemCategory === category) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}

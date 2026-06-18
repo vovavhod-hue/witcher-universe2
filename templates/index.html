@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="hero">
+        <div class="hero-line full-width"></div>
+        <div class="hero-content">
+            <br><br>
+            <h1>Добро пожаловать!</h1>
+            <p>Мы рады приветствовать Вас на сайте, посвящённой книжной саге Анджея Сапковского и игровой серии "Ведьмак"!</p>
+            <br><br>
+        </div>
+        <div class="hero-line full-width"></div>
+    </section>
+
+    <div class="container content-wrapper">
+        <main>
+            <section>
+                <div>
+                    <p class="vseen" style="border-bottom: 0.3px solid var(--border-gold); padding-bottom: 5px; margin-bottom: 15px; margin-top: 15px; color:#8F8B8B;">
+                        «Вселенная Ведьмака: От А до Я» — исчерпывающий энциклопедический ресурс по вселенной Анджея Сапковского. Здесь вы найдёте информацию о книгах, играх, персонажах, чудовищах, локациях и истории Континента.
+                    </p>
+                </div>
+            </section>
+            <!-- КНИГИ -->
+            <section>
+                <h2 class="section-title">Книги</h2>
+                <br>
+                <p class="section-desc" style="color: #aaa; margin-bottom: 15px; font-size: 0.9rem; margin-top: 0px;">Все официально выпущенные произведения цикла "Ведьмак" существуют и на русском языке.</p>
+                
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="collections">Сборники</button>
+                        <button class="tab-btn" data-tab="novels">Романы</button>
+                    </div>
+                    <br>
+                    <div id="collections" class="tab-content active">
+                        <div class="card-grid">
+                            {% for book in books if book[2] == 'Сборник рассказов' %}
+                            <a href="{{ url_for('book_detail', id=book[0]) }}" style="text-decoration: none; color: inherit;">
+                                <div class="card">
+                                    <div class="card-img" style="background-image: url('{{ book[4] }}');"></div>
+                                    <div class="card-title">"{{ book[1] }}"</div>
+                                    <div class="card-sub">{{ book[2] }}</div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div id="novels" class="tab-content">
+                        <div class="card-grid">
+                            {% for book in books if book[2] == 'Роман' %}
+                            <a href="{{ url_for('book_detail', id=book[0]) }}" style="text-decoration: none; color: inherit;">
+                                <div class="card">
+                                    <div class="card-img" style="background-image: url('{{ book[4] }}');"></div>
+                                    <div class="card-title">"{{ book[1] }}"</div>
+                                    <div class="card-sub">{{ book[2] }}</div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="{{ url_for('books_page') }}" class="btn-gold">Все книги</a>
+            </section>
+
+            <!-- ИГРЫ -->
+            <section>
+                <br>
+                <h2 class="section-title">Компьютерные игры</h2>
+                <div class="card-grid">
+                    {% for game in games %}
+                    <!-- ССЫЛКА ТЕПЕРЬ ВЕДЁТ НА game_detail С КОНКРЕТНЫМ ID -->
+                    <a href="{{ url_for('game_detail', id=game[0]) }}" style="text-decoration: none; color: inherit;">
+                        <div class="card">
+                            <div class="card-img" style="background-image: url('{{ game[4] }}');"></div>
+                            <div class="card-title">{{ game[1] }}</div>
+                            <div class="card-sub">{{ game[3] }}, {{ game[2] }}</div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('games_page') }}" class="btn-gold">Все игры</a>
+            </section>
+
+            <!-- ЭНЦИКЛОПЕДИЯ -->
+            <section>
+                <br>
+                <h2 class="section-title">Энциклопедия</h2>
+                <div class="encyclopedia-grid">
+                    {% for entry in ency %}
+                    <a href="{{ url_for('encyclopedia_page') }}" style="text-decoration: none; color: inherit;">
+                        <div class="ency-card">
+                            <img src="{{ entry[3] }}" alt="{{ entry[1] }}">
+                            <h4>{{ entry[1] }}</h4>
+                            <div style="font-size:0.8rem; color:#aaa; margin-bottom:5px;">{{ entry[2] }}</div>
+                            <p>{{ entry[4] }}</p>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                <a href="{{ url_for('encyclopedia_page') }}" class="btn-gold">Вся энциклопедия</a>
+            </section>
+        </main>
+
+        <aside>
+            <h3 class="section-title" style="border-bottom: 1px solid var(--text-gold);">Новости</h3>
+            <div class="sidebar-news">
+                <div class="sidebar-news-item">
+                    <div class="news-date">28 мая 2026.</div>
+                    <div class="news-title">CD Projekt представила дополнение Songs of the Past для The Witcher 3.</div>
+                </div>
+                <div class="sidebar-news-item">
+                    <div class="news-date">16 декабря 2025.</div>
+                    <div class="news-title">Ожидаемый выход комикса «Ведьмак».</div>
+                </div>
+                <div class="sidebar-news-item">
+                    <div class="news-date">30 октября 2025 года.</div>
+                    <div class="news-title">Премьера 4-го сезона сериала «Ведьмак» от Netflix.</div>
+                </div>
+                <div class="sidebar-news-item">
+                    <div class="news-date">30 сентября 2025.</div>
+                    <div class="news-title">Выход книги «Перекрёсток воронов» в России и во всём мире.</div>
+                </div>
+                <div class="sidebar-news-item">
+                    <div class="news-date">29 июля 2025.</div>
+                    <div class="news-title">Выход комикса «Вопрос цены».</div>
+                </div>
+                <div class="sidebar-news-item">
+                    <div class="news-date">3 июня 2025.</div>
+                    <div class="news-title">Техническая демонстрация и второй трейлер игры «Ведьмак 4».</div>
+                </div>
+            </div>
+
+            <h3 class="section-title" style="border-bottom: 1px solid var(--text-gold); margin-top: 30px;">Разделы</h3>
+            <div class="sidebar-sections">
+                <ul>
+                    <li><a href="{{ url_for('books_page') }}">Книги</a></li>
+                    <li><a href="{{ url_for('games_page') }}">Игры</a></li>
+                    <li><a href="{{ url_for('encyclopedia_page', type='Персонажи') }}">Персонажи</a></li>
+                    <li><a href="{{ url_for('encyclopedia_page', type='Монстры') }}">Монстры</a></li>
+                    <li><a href="{{ url_for('encyclopedia_page', type='Локации') }}">Локации</a></li>
+                    <li><a href="{{ url_for('encyclopedia_page', type='История') }}">История</a></li>
+                    <li><a href="{{ url_for('encyclopedia_page', type='Магия') }}">Магия</a></li>
+                    <li><a href="{{ url_for('community') }}">Сообщество</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Находим все кнопки вкладок
+    const tabs = document.querySelectorAll('.tab-btn');
+    // Находим все блоки с содержимым
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Убираем активный класс со всех кнопок
+            tabs.forEach(t => t.classList.remove('active'));
+            // Добавляем активный класс на нажатую кнопку
+            this.classList.add('active');
+            
+            // Скрываем все блоки содержимого
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Показываем нужный блок
+            const targetId = this.getAttribute('data-tab');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+});
+</script>
+{% endblock %}

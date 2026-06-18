@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <a href="{{ url_for('anime') }}" class="breadcrumb-link">Аниме</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">{{ anime.title }}</span>
+        </div>
+    </div>
+
+    <div class="anime-detail" style="background-color: #1f1f1f; padding: 30px; border-radius: 8px; margin-bottom: 30px;">
+        <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+            <!-- Постер -->
+            <div class="anime-poster" style="flex: 0 0 250px;">
+                <img src="{{ anime.poster }}" alt="{{ anime.title }}" style="width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border-gold);">
+            </div>
+
+            <!-- Информация -->
+            <div class="anime-info" style="flex: 1;">
+                <h1 style="color: #fff; font-size: 2rem; margin-bottom: 15px;">{{ anime.title }}</h1>
+                
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Год: {{ anime.year }}</span>
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Страна: {{ anime.country }}</span>
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Рейтинг: {{ anime.rating }}</span>
+                    <span style="background: #333; padding: 5px 15px; border-radius: 20px; color: #fff; font-size: 0.9rem;">Длительность: {{ anime.duration }}</span>
+                </div>
+
+                <div class="anime-description" style="color: #aaa; font-size: 1rem; line-height: 1.8; margin-bottom: 20px;">
+                    {{ anime.description }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Актеры -->
+        <div class="anime-actors" style="margin-top: 20px;">
+            <h3 style="color: var(--text-gold); margin-bottom: 15px;">Актеры</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                {% for actor in anime.actors %}
+                <span style="background: #333; padding: 8px 18px; border-radius: 20px; color: #aaa; font-size: 0.9rem;">{{ actor }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Трейлер -->
+    <div class="anime-trailer" style="margin-bottom: 40px;">
+        <h3 style="color: var(--text-gold); margin-bottom: 15px;">Трейлер</h3>
+        <div style="background-color: #1f1f1f; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+            {% if anime.trailer %}
+                <iframe width="100%" height="100%" src="{{ anime.trailer }}" frameborder="0" allowfullscreen style="border-radius: 8px;"></iframe>
+            {% else %}
+                <div style="color: #aaa; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🎬</div>
+                    <p>Трейлер недоступен</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

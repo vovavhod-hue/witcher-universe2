@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Энциклопедия</span>
+        </div>
+        <h1 class="page-title">Энциклопедия Вселенной</h1>
+    </div>
+
+    <!-- Фильтры по типу -->
+    <div class="filter-tabs" style="display: flex; gap: 20px; margin-bottom: 20px; border-bottom: 1px solid var(--border-gold); padding-bottom: 10px; flex-wrap: wrap;">
+        <a href="#" class="filter-tab active" data-type="all" style="color: var(--text-gold); text-decoration: none; font-weight: 700;">Все</a>
+        <a href="#" class="filter-tab" data-type="Персонажи" style="color: #aaa; text-decoration: none;">Персонажи</a>
+        <a href="#" class="filter-tab" data-type="Монстры" style="color: #aaa; text-decoration: none;">Монстры</a>
+        <a href="#" class="filter-tab" data-type="Локации" style="color: #aaa; text-decoration: none;">Локации</a>
+        <a href="#" class="filter-tab" data-type="История" style="color: #aaa; text-decoration: none;">История</a>
+        <a href="#" class="filter-tab" data-type="Магия" style="color: #aaa; text-decoration: none;">Магия</a>
+    </div>
+
+    <!-- Поиск по тегам -->
+    <div style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+        <input type="text" id="tagSearchInput" placeholder="Поиск по тегам (например: ведьмак, геральт)..." style="flex: 1; padding: 12px; background: #1f1f1f; border: 1px solid var(--border-gold); border-radius: 4px; color: #fff; outline: none; min-width: 200px;">
+        <button onclick="filterByTag()" style="background: none; border: 1px solid var(--border-gold); color: var(--text-gold); padding: 10px 25px; border-radius: 4px; cursor: pointer; font-weight: 700; transition: 0.3s;" onmouseover="this.style.background='var(--border-gold)'; this.style.color='#000';" onmouseout="this.style.background='none'; this.style.color='var(--text-gold)';">🔍 Найти</button>
+        <button onclick="resetFilters()" style="background: none; border: 1px solid #555; color: #888; padding: 10px 25px; border-radius: 4px; cursor: pointer; transition: 0.3s;" onmouseover="this.style.borderColor='var(--text-gold)'; this.style.color='#fff';" onmouseout="this.style.borderColor='#555'; this.style.color='#888';">✕ Сбросить</button>
+    </div>
+
+    <!-- Счетчик результатов -->
+    <div style="color: #888; font-size: 0.9rem; margin-bottom: 15px;" id="resultCount">
+        Найдено: {{ ency|length }} записей
+    </div>
+
+    <div class="encyclopedia-grid">
+    {% for entry in ency %}
+    <div class="ency-card" data-type="{{ entry[2] }}" style="border: 1px solid var(--border-gold); padding: 10px; background-color: #1f1f1f; transition: 0.3s; border-radius: 4px;">
+        <div style="border: 1px solid var(--border-gold); display: inline-block; padding: 2px 10px; color: var(--text-gold); font-size: 0.75rem; margin-bottom: 8px; border-radius: 3px;">
+            {{ entry[2] }}
+        </div>
+        <div style="height: 200px; background-image: url('{{ entry[3] }}'); background-size: cover; background-position: center; margin-bottom: 10px; border-radius: 4px;"></div>
+        <h4 style="color: var(--text-gold); font-size: 1rem; margin-bottom: 5px;">{{ entry[1] }}</h4>
+        <p style="color: #aaa; font-size: 0.85rem; line-height: 1.4; margin-bottom: 10px;">{{ entry[4] }}</p>
+        {% if entry[5] and entry[5].strip() %}
+        <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; border-top: 1px solid #333; padding-top: 8px;">
+            {% set tags = entry[5].split(',') %}
+            {% for tag in tags %}
+            <span style="border: 1px solid var(--border-gold); padding: 2px 10px; border-radius: 4px; font-size: 0.7rem; color: var(--text-gold); background-color: #27210E;">
+                {{ tag.strip() }}
+            </span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+    {% if not ency %}
+    <div style="text-align: center; padding: 60px 20px; color: #888; border: 1px dashed #444; border-radius: 8px;">
+        <div style="font-size: 3rem; margin-bottom: 15px;">📚</div>
+        <p style="font-size: 1.2rem;">В энциклопедии пока нет записей</p>
+        <p style="font-size: 0.9rem;">Добавьте первую статью через панель управления</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// Фильтрация по типу
+document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.filter-tab').forEach(t => {
+            t.classList.remove('active');
+            t.style.color = '#aaa';
+        });
+        this.classList.add('active');
+        this.style.color = 'var(--text-gold)';
+        
+        const type = this.dataset.type;
+        filterCards(type, document.getElementById('tagSearchInput').value.toLowerCase().trim());
+    });
+});
+
+function filterByTag() {
+    const query = document.getElementById('tagSearchInput').value.toLowerCase().trim();
+    const activeTab = document.querySelector('.filter-tab.active');
+    const type = activeTab ? activeTab.dataset.type : 'all';
+    filterCards(type, query);
+}
+
+function filterCards(type, tagQuery) {
+    let visibleCount = 0;
+    document.querySelectorAll('.ency-card').forEach(card => {
+        let show = true;
+        if (type !== 'all' && card.dataset.type !== type) {
+            show = false;
+        }
+        if (show && tagQuery) {
+            const tagsElement = card.querySelector('div:last-child');
+            if (tagsElement) {
+                const tagsText = tagsElement.textContent.toLowerCase();
+                if (!tagsText.includes(tagQuery)) {
+                    show = false;
+                }
+            } else {
+                show = false;
+            }
+        }
+        card.style.display = show ? 'block' : 'none';
+        if (show) visibleCount++;
+    });
+    document.getElementById('resultCount').textContent = `Найдено: ${visibleCount} записей`;
+}
+
+function resetFilters() {
+    document.getElementById('tagSearchInput').value = '';
+    document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.remove('active');
+        t.style.color = '#aaa';
+    });
+    document.querySelector('.filter-tab[data-type="all"]').classList.add('active');
+    document.querySelector('.filter-tab[data-type="all"]').style.color = 'var(--text-gold)';
+    filterCards('all', '');
+}
+
+document.getElementById('tagSearchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        filterByTag();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    filterCards('all', '');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <div class="breadcrumbs">
+            <a href="{{ url_for('index') }}" class="breadcrumb-link">Главная</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <a href="{{ url_for('forum') }}" class="breadcrumb-link">Общение</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <span class="breadcrumb-current">Новая тема</span>
+        </div>
+        <h1 class="page-title">Новая тема</h1>
+    </div>
+
+    <div style="background-color: #1f1f1f; border-radius: 8px; padding: 30px; border: 1px solid #444;">
+        <h3 style="color: var(--text-gold); font-size: 1.5rem; margin-bottom: 20px;">Создать новую тему</h3>
+        
+        <form action="{{ url_for('new_topic') }}" method="POST">
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; color: #aaa; margin-bottom: 8px; font-size: 1rem;">Заголовок темы</label>
+                <input type="text" name="title" placeholder="Введите название..." required style="width: 100%; padding: 12px; background: #2a2a2a; border: none; border-radius: 6px; color: #fff; font-size: 1rem;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; color: #aaa; margin-bottom: 8px; font-size: 1rem;">Сообщение</label>
+                <textarea name="message" placeholder="Опишите ваш вопрос или мысль..." required style="width: 100%; padding: 12px; background: #2a2a2a; border: none; border-radius: 6px; color: #fff; font-size: 1rem; height: 200px; resize: vertical;"></textarea>
+            </div>
+            
+            <!-- Поле автор (заполняется автоматически, если вошёл, или вводится вручную) -->
+            <input type="hidden" name="author" value="{{ session.get('username', 'Аноним') }}">
+            
+            <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                <a href="{{ url_for('forum') }}" style="background: #333; color: #fff; padding: 10px 20px; border-radius: 4px; text-decoration: none;">Отмена</a>
+                <button type="submit" class="btn-gold">Опубликовать</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ведьмак: Вселенная от А до Я</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+           <div class="top-bar">
+            <div class="logo-area">
+                <div class="logo-img">
+                        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Логотип Ведьмак">
+                    </div>
+                    <div style="font-size: 18px; font-weight:bold;">THE WITCHER</div>
+                </div>
+                
+                <div class="site-title-center">
+                    ВСЕЛЕННАЯ ВЕДЬМАКА ОТ А ДО Я
+                </div>
+
+                <div class="search-area">
+                    <div class="search-box">
+                        <input type="text" id="headerSearchInput" placeholder="Поиск..." onkeydown="if(event.key === 'Enter') performHeaderSearch()">
+                        <button onclick="performHeaderSearch()">&#128269;</button>
+                    </div>
+                    <a href="{{ url_for('profile') if session.get('username') else url_for('register') }}" style="color: inherit; text-decoration: none;">
+                        <div class="user-icon">
+                            <img src="{{ url_for('static', filename='images/profil.png') }}" alt="Профиль">
+                        </div>
+                    </a>
+                    <!-- КНОПКА БУРГЕР ДЛЯ МОБИЛЬНЫХ -->
+                    <button class="burger-btn" onclick="toggleMobileMenu()" aria-label="Открыть меню">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <nav class="main-nav desktop-nav">
+                <ul>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Навигация <span class="nav-arrow">&#9660;</span></a>
+                        <ul class="dropdown-content">
+                            <li><a href="{{ url_for('index') }}">Главная</a></li>
+                            <li><a href="{{ url_for('forum') }}">Общение</a></li>
+                            <li><a href="{{ url_for('community')}}">Сообщество</a></li>
+                            <li><a href="{{ url_for('search')}}">Поиск</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Классическая серия <span class="nav-arrow">&#9660;</span></a>
+                        <ul class="dropdown-content">
+                            <li><a href="{{ url_for('movies')}}">Фильмы</a></li>
+                            <li><a href="{{ url_for('anime')}}">Аниме</a></li>
+                            <li><a href="{{ url_for('books_page')}}">Литература</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Игровая линейка <span class="nav-arrow">&#9660;</span></a>
+                        <ul class="dropdown-content">
+                            <li><a href="{{ url_for('game_detail', id=1) }}">Ведьмак 1</a></li>
+                            <li><a href="{{ url_for('game_detail', id=2) }}">Ведьмак 2</a></li>
+                            <li><a href="{{ url_for('game_detail', id=3) }}">Ведьмак 3</a></li>
+                            <li><a href="{{ url_for('games_page') }}">Гвинт</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#">Сообщество <span class="nav-arrow">&#9660;</span></a>
+                        <ul class="dropdown-content">
+                            <li><a href="{{ url_for('news')}}">Свежие новости</a></li>
+                            <li><a href="{{ url_for('help')}}">Справка</a></li>
+                            <li><a href="{{ url_for('rules')}}">Правила сообщества</a></li>
+                            <li><a href="{{ url_for('feedback')}}">Администрация</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div id="mobileMenu" class="mobile-nav">
+                <div class="mobile-nav-content">
+                    <div class="mobile-category">
+                        <div class="mobile-cat-title">Навигация</div>
+                        <ul>
+                            <li><a href="{{ url_for('index') }}">Главная</a></li>
+                            <li><a href="{{ url_for('forum') }}">Общение</a></li>
+                            <li><a href="{{ url_for('community')}}">Сообщество</a></li>
+                            <li><a href="{{ url_for('search')}}">Поиск</a></li>
+                        </ul>
+                    </div>
+                    <div class="mobile-category">
+                        <div class="mobile-cat-title">Классическая серия</div>
+                        <ul>
+                            <li><a href="{{ url_for('books_page')}}">Книги</a></li>
+                            <li><a href="{{ url_for('movies')}}">Фильмы</a></li>
+                            <li><a href="{{ url_for('anime')}}">Аниме</a></li>
+                        </ul>
+                    </div>
+                    <div class="mobile-category">
+                        <div class="mobile-cat-title">Игровая линейка</div>
+                        <ul>
+                            <li><a href="{{ url_for('game_detail', id=1) }}">Ведьмак 1</a></li>
+                            <li><a href="{{ url_for('game_detail', id=2) }}">Ведьмак 2</a></li>
+                            <li><a href="{{ url_for('game_detail', id=3) }}">Ведьмак 3</a></li>
+                            <li><a href="{{ url_for('games_page') }}">Гвинт</a></li>
+                        </ul>
+                    </div>
+                    <div class="mobile-category">
+                        <div class="mobile-cat-title">Сообщество</div>
+                        <ul>
+                            <li><a href="{{ url_for('news')}}">Свежие новости</a></li>
+                            <li><a href="{{ url_for('help')}}">Справка</a></li>
+                            <li><a href="{{ url_for('rules')}}">Правила сообщества</a></li>
+                            <li><a href="{{ url_for('feedback')}}">Администрация</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mobile-close" onclick="toggleMobileMenu()">×</div>
+            </div>
+            <br>
+        </div>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>О сайте</h4>
+                    <p style="font-size: 0.9rem; color: #aaa;">"Вселенная Ведьмака: От А до Я" — неофициальный энциклопедический ресурс по вселенной Анджея Сапковского.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Разделы</h4>
+                    <ul>
+                        <li><a href="{{ url_for('books_page') }}">Книги</a></li>
+                        <li><a href="{{ url_for('games_page') }}">Игры</a></li>
+                        <li><a href="{{ url_for('encyclopedia_page') }}">Энциклопедия</a></li>
+                        <li><a href="{{ url_for('community')}}">Сообщество</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Игры</h4>
+                    <ul>
+                        <li><a href="{{ url_for('game_detail', id=1) }}">Ведьмак</a></li>
+                        <li><a href="{{ url_for('game_detail', id=2) }}">Ведьмак 2</a></li>
+                        <li><a href="{{ url_for('game_detail', id=3) }}">Ведьмак 3</a></li>
+                        <li><a href="{{ url_for('games_page') }}">Гвинт</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Связь</h4>
+                    <ul>
+                        <li><a href="https://web.telegram.org/a/#-1004207569774" target="_blank">Наш Telegram</a></li>
+                        <li><a href="{{ url_for('feedback') }}">Обратная связь</a></li>
+                        <li><a href="{{ url_for('login') }}">Вход</a></li>
+                        <li><a href="{{ url_for('admin_panel') }}">Панель управления</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Вселенная Ведьмака: От А до Я. Неофициальный фан-сайт. Все права на произведения принадлежат Анджею Сапковскому и CD Projekt RED.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function performHeaderSearch() {
+            const query = document.getElementById('headerSearchInput').value.trim();
+            if (!query) return;
+            window.location.href = '/search?q=' + encodeURIComponent(query);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const body = document.body;
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                body.style.overflow = '';
+            } else {
+                menu.classList.add('active');
+                body.style.overflow = 'hidden';
+            }
+        }
+    </script>
+    
+    {% set alert_msg = session.pop('alert_message', None) %}
+    {% if alert_msg %}
+    <div id="flaskAlertMessage" style="display: none;">{{ alert_msg }}</div>
+    <script>
+        var message = document.getElementById('flaskAlertMessage').innerText;
+        if (message) {
+            alert(message);
+        }
+    </script>
+    {% endif %}
+</body>
+</html>

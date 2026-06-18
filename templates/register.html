@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="auth-card" style="background-color: #3b3516; border: 1px solid var(--border-gold); padding: 48px; max-width: 548px; margin: 50px auto; border-radius: 8px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <h1 style="color: #fff; font-size: 2.25rem; margin-bottom: 32px; font-weight: 400;">Регистрация</h1>
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="auth-field" style="margin-bottom: 20px; text-align: left;">
+                <label style="display: block; color: #aaa; margin-bottom: 6px; font-size: 0.95rem; font-weight: 400;">Эл. почта</label>
+                <input type="email" name="email" placeholder="Эл. почта..." required style="width: 100%; padding: 12px; background-color: #000; border: 1px solid #333; border-radius: 6px; color: #fff; outline: none; box-sizing: border-box;">
+            </div>
+            <div class="auth-field" style="margin-bottom: 20px; text-align: left;">
+                <label style="display: block; color: #aaa; margin-bottom: 6px; font-size: 0.95rem; font-weight: 400;">Имя участника</label>
+                <input type="text" name="username" placeholder="Имя участника..." required style="width: 100%; padding: 12px; background-color: #000; border: 1px solid #333; border-radius: 6px; color: #fff; outline: none; box-sizing: border-box;">
+            </div>
+            <div class="auth-field" style="margin-bottom: 20px; text-align: left;">
+                <label style="display: block; color: #aaa; margin-bottom: 6px; font-size: 0.95rem; font-weight: 400;">Пароль</label>
+                <input type="password" name="password" placeholder="Пароль..." required style="width: 100%; padding: 12px; background-color: #000; border: 1px solid #333; border-radius: 6px; color: #fff; outline: none; box-sizing: border-box;">
+            </div>
+            <div class="auth-checkbox" style="display: flex; align-items: flex-start; gap: 12px; margin: 16px 0; text-align: left;">
+                <input type="checkbox" id="agree" required style="width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: #d4af37;">
+                <label for="agree" style="font-size: 0.9rem; color: #aaa; line-height: 1.4;">
+                    Я согласен с тем, что Вселенная Ведьмака: от а до я 
+                    <a href="#" style="color: #d4af37; text-decoration: none;">Условия использования</a> и <a href="#" style="color: #d4af37; text-decoration: none;">Конфиденциальность</a>.
+                </label>
+            </div>
+            <div class="disclaimer" style="font-size: 0.85rem; color: #888; text-align: center; margin-bottom: 16px; line-height: 1.4;">
+                Нажимая кнопку «Регистрация», вы подтверждаете, что вам исполнилось 13 лет.
+            </div>
+            <button type="submit" style="width: 100%; padding: 14px; background-color: #d4af37; border: none; color: #000; font-weight: 700; font-size: 1rem; border-radius: 5px; cursor: pointer; margin: 16px 0; transition: 0.2s;">РЕГИСТРАЦИЯ</button>
+        </form>
+        <div class="auth-link" style="text-align: center; font-size: 0.95rem; color: #aaa; margin-top: 12px;">
+            <span>У вас уже есть учетная запись?</span> <a href="{{ url_for('login') }}" style="color: #d4af37; text-decoration: none;">Войти в систему</a>
+        </div>
+        <a href="{{ url_for('index') }}" class="auth-back" style="display: block; text-align: center; color: #fff; text-decoration: none; margin-top: 24px; font-size: 0.95rem;">← На главную</a>
+    </div>
+</div>
+{% endblock %}
